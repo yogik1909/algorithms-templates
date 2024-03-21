@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,15 @@ import java.util.stream.Collectors;
 public class B {
 
     private static List<Integer> zip(List<Integer> a, List<Integer> b) {
-        // Ваше решение
+        int cap = a.size() + b.size();
+        List<Integer> ret = new ArrayList<>(cap);
+        int curIndIns = 0;
+        for (int valAlrr_a: a){
+            ret.add(valAlrr_a);
+            ret.add(b.get(curIndIns));
+            curIndIns++;
+        }
+        return ret;
     }
 
 

@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,21 @@ import java.util.stream.Collectors;
 public class C {
 
     private static List<Double> movingAverage(int n, List<Integer> arr, int windowSize) {
-        // ваше решение
+        ArrayList<Double> res = new ArrayList<>(arr.size() - windowSize);
+        int curSum = 0;
+//        for(int i = 0; i < windowSize; i++){
+//            curSum += arr.get(i);
+//        }
+//        res.add((double) ((double)curSum/windowSize));
+        for (int i = 0; i < arr.size(); i++){
+            curSum -= i >= windowSize ? arr.get(i-windowSize) : 0;
+            curSum += arr.get(i);
+            if (i < windowSize - 1) continue;
+            res.add((double)curSum/windowSize);
+        }
+
+
+        return res;
     }
 
     public static void main(String[] args) throws IOException {

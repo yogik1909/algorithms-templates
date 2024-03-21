@@ -1,3 +1,5 @@
+package sprint1_nonfinals;
+
 import java.util.Scanner;
 
 public class B {

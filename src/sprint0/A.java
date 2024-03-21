@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class A {
 
     private static int getSum(int a, int b) {
-        // Ваше решение
+        return a + b;
     }
 
     public static void main(String[] args) {
