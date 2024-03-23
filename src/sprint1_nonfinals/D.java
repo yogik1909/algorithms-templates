@@ -12,13 +12,22 @@ import java.io.IOException;
 public class D {
 
     private static int getWeatherRandomness(List<Integer> temperatures) {
-        // Ваше решение        
+        int sum = 0;
+        Integer cur = null, prv = null, nxt = null;
+        int size = temperatures.size();
+        for(int i = 0; i < size; i++){
+            cur = temperatures.get(i);
+            prv = temperatures.get(i > 0? i-1: 0);
+            nxt  = temperatures.get(i+1 < size? i+1: i);
+            if ((i == 0 || cur.intValue() > prv.intValue()) && (i == size-1 || cur.intValue() > nxt.intValue())) sum++;
+        }
+        return sum;
     }
 
     public static void main(String[] args) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int numberOfDays = readInt(reader);
-            List<Integer> temperatures = readList(reader); 
+            List<Integer> temperatures = readList(reader);
             int chaosNumber = getWeatherRandomness(temperatures);
             System.out.println(chaosNumber);
         }
