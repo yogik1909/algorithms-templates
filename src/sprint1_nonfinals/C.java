@@ -2,17 +2,29 @@ package sprint1_nonfinals;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.List;
-import java.util.Comparator;
 import java.io.IOException;
 
 public class C {
 
     private static List<Integer> getNeighbours(List<List<Integer>> matrix, int row, int col) {
-        // Ваше решение
+        int curRow = 0, curCol = 0;
+        List<Integer> ret= new ArrayList<>();
+        for (List<Integer> rowLone : matrix){
+            for (Integer val : rowLone) {
+                int div = Math.abs(row - curRow) + Math.abs(curCol - col);
+                curCol++;
+                if (div != 1) continue;
+                ret.add(val);
+                }
+            curRow++;
+            curCol = 0;
+
+        }
+        Collections.sort(ret);
+        return  ret;
+
     }
 
     public static void main(String[] args) throws IOException {
