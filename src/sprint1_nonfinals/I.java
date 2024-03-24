@@ -8,7 +8,12 @@ import java.io.InputStreamReader;
 public class I {
 
     private static boolean isPowerOfFour(int n) {
-        // Ваше решение
+
+        while (n % 4 == 0 || n == 1){
+            if (n == 1) return true;
+            n /= 4;
+        }
+        return false;
     }
 
     public static void main(String[] args) throws IOException {
