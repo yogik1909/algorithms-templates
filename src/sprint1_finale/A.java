@@ -7,36 +7,56 @@ import java.util.stream.Collectors;
 public class A {
 
     private static List<Integer> getNeighb(List<Integer> numberList, int k) {
-        List<Integer> emptyIndexes = new LinkedList<>();
-        int empIndex = 0;
-        for (Integer val:numberList){
-            if(val == 0){emptyIndexes.add(empIndex);}
-            empIndex++;
-        }
         List<Integer> neighb = new LinkedList<Integer>(Collections.nCopies(k, Integer.valueOf(0)));
-        if (emptyIndexes.size() == neighb.size()
-            || emptyIndexes.size() == 0) return neighb;
+        List<Integer> forwSteps = new LinkedList<Integer>(Collections.nCopies(k, Integer.valueOf(0)));
+        List<Integer> backSteps = new LinkedList<Integer>(Collections.nCopies(k, Integer.valueOf(0)));
+        int size = numberList.size() - 1;
+        int forStep = size, backStep = size;
 
-        int leftIndex, rightIndex;
-        for (int i = 1; i <= emptyIndexes.size()-1; i++){
-            leftIndex = emptyIndexes.get(i-1);
-            rightIndex = emptyIndexes.get(i);
-                int diff = rightIndex - leftIndex;
-                int div = diff / 2;
-                for (int offset = 1; offset <= div; offset++){
-                    neighb.set(leftIndex +offset, offset);
-                    neighb.set(rightIndex-offset, offset);
+
+        for (int forwardIndex = 0, backIndex = size; forwardIndex <= size; forwardIndex++, backIndex--){
+            int forwardNumber = numberList.get(forwardIndex);
+            int backNumber    = numberList.get(backIndex);
+
+            if (forwardNumber != 0){
+                if( forwardIndex < backIndex) {
+                    forwSteps.set(forwardIndex, forStep++);
                 }
+
+                if(forwardIndex >= backIndex){
+                    int backRes = backSteps.get(forwardIndex);
+                    neighb.set(forwardIndex, forStep < backRes?forStep : backRes);
+                    forStep++;
+                }
+
+
+
+            }else forStep = 1;
+
+
+            if (backNumber != 0){
+                if ( backIndex > forwardIndex) {
+                    backSteps.set(backIndex, backStep++);
+                }
+
+                if (backIndex <= forwardIndex){
+                    int forRes = forwSteps.get(backIndex);
+                    neighb.set(backIndex, forStep < forRes?backStep : forRes);
+                    backStep++;
+                }
+            }else backStep = 1;
+
+
+
+
+
+
+
+
+
         }
-        rightIndex = emptyIndexes.get(0);
-        for (int i = 0, rad = rightIndex; i < rightIndex ; i++, rad--) {
-            neighb.set(i, rad);
-        };
-        rightIndex = neighb.size()-1;
-        leftIndex = emptyIndexes.get(emptyIndexes.size()-1);
-        for (int i = leftIndex+1, rad = 1; i <= rightIndex ; i++, rad++) {
-            neighb.set(i, rad);
-        }
+
+
 
 
 
@@ -44,15 +64,18 @@ public class A {
     }
     public static void main(String[] args) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out))) {
+             //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out))
+        ) {
+            StringBuilder output_buffer = new StringBuilder();
             int numberOfHouses = readInt(reader);
             List<Integer> addressSpace = readList(reader);
             //long startTime = System.currentTimeMillis();
             List<Integer> neighb = getNeighb(addressSpace, numberOfHouses);
             //long time = System.currentTimeMillis() ;
             for (int elem : neighb) {
-                writer.write( elem + " ");
+                output_buffer.append(elem).append(" ");
             }
+            System.out.println(output_buffer.toString());
             //writer.write("Time:"+(time - startTime));
         }
     }
