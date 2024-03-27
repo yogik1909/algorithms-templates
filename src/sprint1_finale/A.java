@@ -9,14 +9,14 @@ public class A {
     private static List<Integer> getNeighb(List<Integer> numberList, int k) {
 
         List<Integer> neighb = new ArrayList<Integer>(Collections.nCopies(k, 0));
-        boolean EmptyFound = false;
+        boolean emptyFounded = false;
         int moveRigt = 1;
         for (int ltIns = 0; ltIns < numberList.size(); ltIns++) {
             if (numberList.get(ltIns) != 0) {
-                if (EmptyFound) neighb.set(ltIns, moveRigt++);
+                if (emptyFounded) neighb.set(ltIns, moveRigt++);
                 continue;
             }
-            EmptyFound = true;
+            emptyFounded = true;
 
 
             for (int j = 1;
@@ -36,13 +36,16 @@ public class A {
     }
     public static void main(String[] args) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out))) {
+             //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out))
+        ) {
+            StringBuilder output_buffer = new StringBuilder();
             int numberOfHouses = readInt(reader);
             List<Integer> addressSpace = readList(reader);
             List<Integer> neighb = getNeighb(addressSpace, numberOfHouses);
             for (int elem : neighb) {
-                writer.write( elem + " ");
+                output_buffer.append(elem).append(" ");
             }
+            System.out.println(output_buffer.toString());
         }
     }
 
