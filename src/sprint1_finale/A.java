@@ -23,8 +23,8 @@ public class A {
                  ltIns - j >= 0
                          && numberList.get(ltIns - j) != 0
                          && (neighb.get(ltIns - j) == 0 || j < neighb.get(ltIns - j));
-                    j++)
-            neighb.set(ltIns - j, j);
+                 j++)
+                neighb.set(ltIns - j, j);
             moveRigt = 1;
 
         }
