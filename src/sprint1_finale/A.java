@@ -1,3 +1,4 @@
+//https://contest.yandex.ru/contest/22450/run-report/110816802/
 package sprint1_finale;
 
 import java.io.*;
@@ -8,31 +9,21 @@ public class A {
 
     private static List<Integer> getNeighb(List<Integer> numberList, int k) {
 
-        List<Integer> neighb = new ArrayList<Integer>(Collections.nCopies(k, 0));
-        boolean emptyFounded = false;
-        int moveRigt = 1;
+        List<Integer> neigh = new ArrayList<Integer>(Collections.nCopies(k, 0));
+        int entZero = 0;
+        int step = numberList.size();
         for (int ltIns = 0; ltIns < numberList.size(); ltIns++) {
-            if (numberList.get(ltIns) != 0) {
-                if (emptyFounded) neighb.set(ltIns, moveRigt++);
-                continue;
-            }
-            emptyFounded = true;
-
-
-            for (int j = 1;
-                 ltIns - j >= 0
-                         && numberList.get(ltIns - j) != 0
-                         && (neighb.get(ltIns - j) == 0 || j < neighb.get(ltIns - j));
-                    j++)
-            neighb.set(ltIns - j, j);
-            moveRigt = 1;
-
+            if(numberList.get(ltIns) == 0) {step = 1; entZero++; continue;}
+            neigh.set(ltIns, step++);
+        }
+        for (int rghIns = numberList.size()-1; rghIns >= 0 || entZero > 0; rghIns--) {
+            if(numberList.get(rghIns) == 0) {step = 1; entZero--; continue;}
+            if (neigh.get(rghIns) > step )
+            neigh.set(rghIns, step);
+            step++;
         }
 
-
-
-
-        return neighb;
+        return neigh;
     }
     public static void main(String[] args) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
