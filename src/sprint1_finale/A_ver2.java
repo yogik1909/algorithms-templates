@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 
 public class A_ver2 {
 
-    private static List<Integer> getNeighb(List<Integer> numberList, int k) {
+    private static List<Integer> getNeighb(List<Integer> numberList) {
+        int k = numberList.size();
         List<Integer> neighb = new LinkedList<Integer>(Collections.nCopies(k, Integer.valueOf(0)));
         List<Integer> forwSteps = new LinkedList<Integer>(Collections.nCopies(k, Integer.valueOf(0)));
         List<Integer> backSteps = new LinkedList<Integer>(Collections.nCopies(k, Integer.valueOf(0)));
@@ -42,7 +43,7 @@ public class A_ver2 {
             StringBuilder output_buffer = new StringBuilder();
             int numberOfHouses = readInt(reader);
             List<Integer> addressSpace = readList(reader);
-            List<Integer> neighb = getNeighb(addressSpace, numberOfHouses);
+            List<Integer> neighb = getNeighb(addressSpace);
             for (int elem : neighb) {
                 output_buffer.append(elem).append(" ");
             }

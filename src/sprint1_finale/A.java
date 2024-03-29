@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 public class A {
 
-    private static List<Integer> getNeighb(List<Integer> numberList, int k) {
+    private static List<Integer> getNeighb(List<Integer> numberList) {
 
-        List<Integer> neigh = new ArrayList<Integer>(Collections.nCopies(k, 0));
+        List<Integer> neigh = new ArrayList<Integer>(Collections.nCopies(numberList.size(), 0));
         int entZero = 0; //+1
         int step = numberList.size();
         for (int ltIns = 0; ltIns < numberList.size(); ltIns++) {
@@ -32,7 +32,7 @@ public class A {
             StringBuilder output_buffer = new StringBuilder();
             int numberOfHouses = readInt(reader);
             List<Integer> addressSpace = readList(reader);
-            List<Integer> neighb = getNeighb(addressSpace, numberOfHouses);
+            List<Integer> neighb = getNeighb(addressSpace);
             for (int elem : neighb) {
                 output_buffer.append(elem).append(" ");
             }
