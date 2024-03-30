@@ -1,4 +1,5 @@
 // <template>
+package sprint2.E;
 class Node<V> {  
     public V value;  
     public Node<V> next;  
@@ -14,8 +15,27 @@ class Node<V> {
 
 public class Solution {
     public static Node<String> solution(Node<String> head) {
+        Node<String> newHead, curNode = head;
+
         // Your code
         // ヽ(´▽`)/
+        while (curNode.next != null){
+            curNode = curNode.next;
+        }
+        newHead = curNode;
+        Node<String> pr;
+        while (curNode != null){
+            pr = curNode.next;
+            curNode.next = curNode.prev;
+            curNode.prev = pr;
+            curNode = curNode.next;
+        }
+        return newHead;
+
+    }
+
+    public static void main(String[] args) {
+        test();
     }
 
     private static void test() {
