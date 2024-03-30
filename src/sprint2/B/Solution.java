@@ -14,6 +14,15 @@ public class Solution {
     public static void solution(Node<String> head) {
         // Your code
         // ヽ(´▽`)/
+        Node<String> curNode = head;
+        while (curNode != null){
+            System.out.println(curNode.value);
+            curNode = curNode.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        test();
     }
 
     private static void test() {
