@@ -1,4 +1,5 @@
 // <template>
+package sprint2.B;
 class Node<V> {  
     public V value;  
     public Node<V> next;  
