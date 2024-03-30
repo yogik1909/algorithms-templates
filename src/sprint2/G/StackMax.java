@@ -15,7 +15,7 @@ public class StackMax {
     public static void main(String[] args) throws IOException {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
         Matcher m;
-        int MAX = Integer.MIN_VALUE;
+        int max_val = Integer.MIN_VALUE;
         int curVal;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -29,33 +29,33 @@ public class StackMax {
                         try {
                            curVal = STACK.pop();
                            if (STACK.isEmpty()){
-                               MAX = Integer.MIN_VALUE;
-                           } else if (curVal == MAX)
-                               MAX = Collections.max(STACK);
+                               max_val = Integer.MIN_VALUE;
+                           } else if (curVal == max_val)
+                               max_val = Collections.max(STACK);
                         } catch (NoSuchElementException e) {
-                            stringBuilder.append("error").append(" \n");
+                            stringBuilder.append("error").append("\n");
                         }
                         break;
                     }
                     case "push": {
                         curVal = Integer.parseInt(m.group(2));
-                        MAX = Math.max(MAX, curVal);
+                        max_val = Math.max(max_val, curVal);
                         STACK.push(curVal);
                         break;
                     }
                     case "get_max": {
                         if (STACK.isEmpty()) {
-                            stringBuilder.append("None").append(" \n");
+                            stringBuilder.append("None").append("\n");
                         } else
-                            stringBuilder.append(MAX).append(" \n");
+                            stringBuilder.append(max_val).append("\n");
                         break;
                     }
                     case "top": {
                         if (STACK.isEmpty()) {
-                            stringBuilder.append("error").append(" \n");
+                            stringBuilder.append("error").append("\n");
                         }
                         else
-                            stringBuilder.append(STACK.peekFirst()).append(" \n");
+                            stringBuilder.append(STACK.peekFirst()).append("\n");
                         break;
                     }
                 }
