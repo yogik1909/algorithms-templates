@@ -27,7 +27,7 @@ public class StackMax {
                         try {
                             STACK.pop();
                         } catch (NoSuchElementException e) {
-                            stringBuilder.append("error");
+                            stringBuilder.append("error").append(" \n");
                         }
                         break;
                     }
@@ -37,20 +37,21 @@ public class StackMax {
                     }
                     case "get_max": {
                         if (STACK.isEmpty()) {
-                            stringBuilder.append("None");
+                            stringBuilder.append("None").append(" \n");
                         } else
-                            stringBuilder.append(Collections.max(STACK));
+                            stringBuilder.append(Collections.max(STACK)).append(" \n");
                         break;
                     }
                     case "top": {
                         if (STACK.isEmpty())
-                            stringBuilder.append("error");
+                            stringBuilder.append("error").append(" \n");
                         else
-                            stringBuilder.append(STACK.peekFirst());
+                            stringBuilder.append(STACK.peekFirst()).append(" \n");
                         break;
                     }
                 }
             }
+            System.out.println(stringBuilder);
         }
     }
 
