@@ -15,6 +15,8 @@ public class StackMax {
     public static void main(String[] args) throws IOException {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
         Matcher m;
+        int MAX = Integer.MIN_VALUE;
+        int curVal;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             StringBuilder stringBuilder = new StringBuilder("");
@@ -25,26 +27,33 @@ public class StackMax {
                 switch (m.group(1)) {
                     case "pop": {
                         try {
-                            STACK.pop();
+                           curVal = STACK.pop();
+                           if (STACK.isEmpty()){
+                               MAX = Integer.MIN_VALUE;
+                           } else if (curVal == MAX)
+                               MAX = Collections.max(STACK);
                         } catch (NoSuchElementException e) {
                             stringBuilder.append("error").append(" \n");
                         }
                         break;
                     }
                     case "push": {
-                        STACK.push(Integer.parseInt(m.group(2)));
+                        curVal = Integer.parseInt(m.group(2));
+                        MAX = Math.max(MAX, curVal);
+                        STACK.push(curVal);
                         break;
                     }
                     case "get_max": {
                         if (STACK.isEmpty()) {
                             stringBuilder.append("None").append(" \n");
                         } else
-                            stringBuilder.append(Collections.max(STACK)).append(" \n");
+                            stringBuilder.append(MAX).append(" \n");
                         break;
                     }
                     case "top": {
-                        if (STACK.isEmpty())
+                        if (STACK.isEmpty()) {
                             stringBuilder.append("error").append(" \n");
+                        }
                         else
                             stringBuilder.append(STACK.peekFirst()).append(" \n");
                         break;
