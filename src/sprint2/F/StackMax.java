@@ -1,7 +1,5 @@
 package sprint2.F;
 
-import com.sun.source.tree.IfTree;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
