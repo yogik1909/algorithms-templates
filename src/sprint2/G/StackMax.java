@@ -14,19 +14,20 @@ public class StackMax {
 
     public static void main(String[] args) throws IOException {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
+        Matcher m;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            StringBuilder stringBuilder = new StringBuilder("");
             int n = Integer.parseInt(reader.readLine());
             for (int i = 0; i < n; i++) {
-                String comand = reader.readLine();
-                Matcher m = p.matcher(comand);
+                m = p.matcher(reader.readLine());
                 m.find();
                 switch (m.group(1)) {
                     case "pop": {
                         try {
                             STACK.pop();
                         } catch (NoSuchElementException e) {
-                            System.out.println("error");
+                            stringBuilder.append("error");
                         }
                         break;
                     }
@@ -36,16 +37,16 @@ public class StackMax {
                     }
                     case "get_max": {
                         if (STACK.isEmpty()) {
-                            System.out.println("None");
+                            stringBuilder.append("None");
                         } else
-                            System.out.println(Collections.max(STACK));
+                            stringBuilder.append(Collections.max(STACK));
                         break;
                     }
                     case "top": {
                         if (STACK.isEmpty())
-                            System.out.println("error");
+                            stringBuilder.append("error");
                         else
-                            System.out.println(STACK.peekFirst());
+                            stringBuilder.append(STACK.peekFirst());
                         break;
                     }
                 }
