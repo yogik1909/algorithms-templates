@@ -24,11 +24,13 @@ public class StackMax {
            try{STACK.pop();}
            catch (NoSuchElementException e){
                System.out.println("error");
+               return;
            }
         }
         if (comand.startsWith("push")){
             String[] comOper = comand.split(" ");
             STACK.push(Integer.parseInt(comOper[1]));
+            return;
         }
         if (comand.equals("get_max")){
             if(STACK.isEmpty()){
@@ -36,6 +38,12 @@ public class StackMax {
             }
             else
                 System.out.println(Collections.max(STACK));
+            return;
+        }
+        if(comand.equals("top")){
+            if (STACK.isEmpty()) System.out.println("error");
+            System.out.println(STACK.peekFirst());
+            return;
         }
 
     }
