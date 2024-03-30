@@ -41,8 +41,10 @@ public class StackMax {
             return;
         }
         if(comand.equals("top")){
-            if (STACK.isEmpty()) System.out.println("error");
-            System.out.println(STACK.peekFirst());
+            if (STACK.isEmpty())
+                System.out.println("error");
+            else
+                System.out.println(STACK.peekFirst());
             return;
         }
 
