@@ -9,9 +9,16 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+class STC {
+    public int val;
+    public int max;
+    public STC(int val, int max) {
+        this.max = max;
+        this.val = val;
+    }
+}
 public class StackMax {
-    static LinkedList<Integer> STACK = new LinkedList<>();
-    static LinkedList<Integer> MAX_STACK = new LinkedList<>();
+    static LinkedList<STC> STACK_2 = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
@@ -27,8 +34,7 @@ public class StackMax {
                 switch (m.group(1)) {
                     case "pop": {
                         try {
-                           STACK.pop();
-                           MAX_STACK.pop();
+                           STACK_2.pop();
                         } catch (NoSuchElementException e) {
                             stringBuilder.append("error").append("\n");
                         }
@@ -36,27 +42,27 @@ public class StackMax {
                     }
                     case "push": {
                         curVal = Integer.parseInt(m.group(2));
-                        if (!MAX_STACK.isEmpty())
-                            MAX_STACK.push(Math.max(MAX_STACK.peek(), curVal));
-                        else
-                            MAX_STACK.push(curVal);
-
-                        STACK.push(curVal);
+                        try {
+                            STACK_2.push(new STC(curVal, Math.max(STACK_2.peek().max, curVal)));
+                        }
+                        catch (NullPointerException e){
+                            STACK_2.push(new STC(curVal, curVal));
+                        }
                         break;
                     }
                     case "get_max": {
-                        if (!MAX_STACK.isEmpty())
-                            stringBuilder.append(MAX_STACK.peek()).append("\n");
+                        if (!STACK_2.isEmpty())
+                            stringBuilder.append(STACK_2.peek().max).append("\n");
                         else
                             stringBuilder.append("None").append("\n");
                         break;
                     }
                     case "top": {
-                        if (STACK.isEmpty()) {
+                        if (STACK_2.isEmpty()) {
                             stringBuilder.append("error").append("\n");
                         }
                         else
-                            stringBuilder.append(STACK.peekFirst()).append("\n");
+                            stringBuilder.append(STACK_2.peekFirst().val).append("\n");
                         break;
                     }
                 }
