@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class StackMax {
     static LinkedList<Integer> STACK = new LinkedList<>();
+    static LinkedList<Integer> MAX_STACK = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
@@ -27,11 +28,8 @@ public class StackMax {
                 switch (m.group(1)) {
                     case "pop": {
                         try {
-                           curVal = STACK.pop();
-                           if (STACK.isEmpty()){
-                               max_val = Integer.MIN_VALUE;
-                           } else if (curVal == max_val)
-                               max_val = Collections.max(STACK);
+                           STACK.pop();
+                           MAX_STACK.pop();
                         } catch (NoSuchElementException e) {
                             stringBuilder.append("error").append("\n");
                         }
@@ -39,15 +37,19 @@ public class StackMax {
                     }
                     case "push": {
                         curVal = Integer.parseInt(m.group(2));
-                        max_val = Math.max(max_val, curVal);
+                        if (!MAX_STACK.isEmpty())
+                            MAX_STACK.push(Math.max(MAX_STACK.peek(), curVal));
+                        else
+                            MAX_STACK.push(curVal);
+
                         STACK.push(curVal);
                         break;
                     }
                     case "get_max": {
-                        if (STACK.isEmpty()) {
+                        if (!MAX_STACK.isEmpty())
+                            stringBuilder.append(MAX_STACK.peek()).append("\n");
+                        else
                             stringBuilder.append("None").append("\n");
-                        } else
-                            stringBuilder.append(max_val).append("\n");
                         break;
                     }
                     case "top": {
