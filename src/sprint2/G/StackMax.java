@@ -16,7 +16,6 @@ public class StackMax {
     public static void main(String[] args) throws IOException {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
         Matcher m;
-        int max_val = Integer.MIN_VALUE;
         int curVal;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
