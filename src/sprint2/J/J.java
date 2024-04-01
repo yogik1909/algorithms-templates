@@ -17,10 +17,10 @@ class MyQueueSized {
         return queue.isEmpty();
     }
 
-    public Integer get(){
+    public Integer get() {
         Integer ret = null;
         if (!queue.isEmpty()) ret = queue.pollFirst();
-        System.out.println(ret == null?"error":ret);
+        System.out.println(ret == null ? "error" : ret);
         return ret;
     }
     public void put(int x) {
