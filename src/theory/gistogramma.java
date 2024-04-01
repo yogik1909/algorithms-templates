@@ -13,7 +13,7 @@ public class gistogramma {
             while (true) {
                 if (stack.empty()) {
                     stack.push(0);
-                    left[i] = stack.peek() - 1;
+                    left[i] = -1;
                     break;
                 }
                 int indNextLeftRok = stack.peek();
