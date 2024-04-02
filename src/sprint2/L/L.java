@@ -1,16 +1,19 @@
 package sprint2.L;
 
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class L {
     public static int commit(int n) {
-        if (n < 0) return 0;
-        switch (n){
-            case 0: return 1;
-            case 1: return 1;
-            default: return commit(n-1) + commit(n -2);
-        }
 
+        LinkedList<Integer> stack = new LinkedList<>();
+        stack.push(1);
+        stack.push(1);
+        for (int i = 2; i < n; i++){
+            stack.push(stack.peekFirst() + stack.pollLast());
+        }
+        return stack.peekFirst() + stack.pollLast();
     }
 
     public static void main(String[] args) {
