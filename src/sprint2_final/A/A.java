@@ -12,6 +12,12 @@ class MyQueueSized {
     private int tail;
     private int max_n;
     private int size;
+    private Integer x;
+    private boolean isFull;
+    private boolean isEmpty;
+    private int curIndex;
+
+
 
     public MyQueueSized(int max_size) {
         queue = new Integer[max_size];
@@ -19,54 +25,86 @@ class MyQueueSized {
         tail = 0;
         max_n = max_size;
         size = 0;
+        isEmpty = true;
+        isFull = false;
+
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return isEmpty;
+    }
+    private void push(boolean proc, Integer value){
+        //true - back
+        //false - front
+        if (isFull) {
+            System.out.println("error");
+            return;
+        }
+        size++;
+        isFull = size == max_n;
+        if (head == tail & isEmpty) {
+            queue[tail] = value;
+            isEmpty = false;
+            return;
+        }
+
+        if (proc){
+            curIndex = (tail + 1) %  max_n;
+            tail = curIndex;
+        }
+        else{
+            curIndex = myModulo(head - 1, max_n);
+            head = curIndex;
+        }
+
+        queue[curIndex] = value;
     }
 
     public void push_back(int x) {
-        if (size != max_n) {
-            tail = (tail + 1) % max_n;
-            queue[tail] = x;
-            size++;
-        } else System.out.println("error");
+        push(true, x);
     }
 
     public void push_front(int x) {
-        if (size != max_n) {
-            head = Math.floorMod((head - 1), max_n);
-            queue[head] = x;
-            size++;
-        } else System.out.println("error");
+        push(false, x);
     }
 
-    public Integer pop_front() {
-        if (isEmpty()) {
+    public Integer pop(boolean proc){
+        if (isEmpty) {
             System.out.println("error");
             return null;
         }
-        Integer x = queue[head];
-        queue[head] = null;
-        head = Math.floorMod((head + 1), max_n);
+        if (size == 1) {
+            isEmpty = true;
+            size--;
+            x = queue[tail];
+            queue[tail] = null;
+            System.out.println(x);
+            return x;
+        }
+        int curIndex = proc?tail:head;
         size--;
+        isFull = size == max_n;
+        x = queue[curIndex];
+        queue[curIndex] = null;
+        if (proc)
+            tail = myModulo(curIndex - 1, max_n);
+        else
+            head = curIndex + 1 % max_n;
         System.out.println(x);
         return x;
+    }
+    public Integer pop_front() {
+       return pop(false);
     }
 
     public Integer pop_back() {
-        if (isEmpty()) {
-            System.out.println("error");
-            return null;
-        }
-        Integer x = queue[tail];
-        queue[tail] = null;
-        tail = Math.floorMod((tail - 1), max_n);
-        size--;
-        System.out.println(x);
-        return x;
+      return pop(true);
     }
-
+    private int myModulo(int x, int y){
+        int r = x % y;
+        if (r < 0) r += y;
+        return r;
+    }
 }
 
 public class A {
@@ -76,7 +114,7 @@ public class A {
         int curVal;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            StringBuilder stringBuilder = new StringBuilder("");
+            //StringBuilder stringBuilder = new StringBuilder("");
             int n = Integer.parseInt(reader.readLine());
             MyQueueSized query = new MyQueueSized(Integer.parseInt(reader.readLine()));
             for (int i = 0; i < n; i++) {
@@ -84,7 +122,7 @@ public class A {
                 m.find();
                 switch (m.group(1)) {
                     case "push_back": {
-                        query.push_back(Integer.parseInt(m.group(2)));
+                        query.push_back(Integer.valueOf(m.group(2)));
                         break;
                     }
                     case "push_front": {
