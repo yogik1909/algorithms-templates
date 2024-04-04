@@ -15,7 +15,7 @@ class MyQueueSized {
     private Integer x;
     private boolean isFull;
     private boolean isEmpty;
-    private int curIndex;
+    private StringBuilder log = new StringBuilder("");
 
 
 
@@ -27,6 +27,7 @@ class MyQueueSized {
         size = 0;
         isEmpty = true;
         isFull = false;
+        log = new StringBuilder("");
 
     }
 
@@ -37,7 +38,7 @@ class MyQueueSized {
         //true - back
         //false - front
         if (isFull) {
-            System.out.println("error");
+            log.append("error").append('\n');
             return;
         }
         size++;
@@ -48,14 +49,11 @@ class MyQueueSized {
             return;
         }
 
-        if (proc){
-            curIndex = (tail + 1) %  max_n;
+        int curIndex = Math.floorMod(proc?(tail + 1):(head - 1), max_n);
+        if (proc)
             tail = curIndex;
-        }
-        else{
-            curIndex = myModulo(head - 1, max_n);
+        else
             head = curIndex;
-        }
 
         queue[curIndex] = value;
     }
@@ -70,7 +68,7 @@ class MyQueueSized {
 
     public Integer pop(boolean proc){
         if (isEmpty) {
-            System.out.println("error");
+            log.append("error").append('\n');
             return null;
         }
         if (size == 1) {
@@ -78,7 +76,7 @@ class MyQueueSized {
             size--;
             x = queue[tail];
             queue[tail] = null;
-            System.out.println(x);
+            log.append(x).append('\n');
             return x;
         }
         int curIndex = proc?tail:head;
@@ -87,10 +85,10 @@ class MyQueueSized {
         x = queue[curIndex];
         queue[curIndex] = null;
         if (proc)
-            tail = myModulo(curIndex - 1, max_n);
+            tail = Math.floorMod(curIndex - 1, max_n);
         else
-            head = curIndex + 1 % max_n;
-        System.out.println(x);
+            head = (curIndex + 1) % max_n;
+        log.append(x).append('\n');
         return x;
     }
     public Integer pop_front() {
@@ -100,15 +98,15 @@ class MyQueueSized {
     public Integer pop_back() {
       return pop(true);
     }
-    private int myModulo(int x, int y){
-        int r = x % y;
-        if (r < 0) r += y;
-        return r;
+
+    public String getLog(){
+        return log.toString();
     }
 }
 
 public class A {
     public static void main(String[] args) throws IOException {
+
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
         Matcher m;
         int curVal;
@@ -139,6 +137,7 @@ public class A {
                     }
                 }
             }
+            System.out.println(query.getLog());
         }
     }
 }
