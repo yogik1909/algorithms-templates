@@ -3,6 +3,7 @@ package sprint2_final.A;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,9 +111,9 @@ public class A {
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
         Matcher m;
         int curVal;
-
+        StringTokenizer dfs = new StringTokenizer("строка", "разделители");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            //StringBuilder stringBuilder = new StringBuilder("");
+            StringBuilder stringBuilder = new StringBuilder("");
             int n = Integer.parseInt(reader.readLine());
             MyQueueSized query = new MyQueueSized(Integer.parseInt(reader.readLine()));
             for (int i = 0; i < n; i++) {
