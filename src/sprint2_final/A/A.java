@@ -16,7 +16,7 @@ class MyQueueSized {
     private Integer x;
     private boolean isFull;
     private boolean isEmpty;
-    private StringBuilder log = new StringBuilder("");
+    private StringBuilder log;
 
 
 
@@ -110,10 +110,7 @@ public class A {
 
         Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
         Matcher m;
-        int curVal;
-        StringTokenizer dfs = new StringTokenizer("строка", "разделители");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            StringBuilder stringBuilder = new StringBuilder("");
             int n = Integer.parseInt(reader.readLine());
             MyQueueSized query = new MyQueueSized(Integer.parseInt(reader.readLine()));
             for (int i = 0; i < n; i++) {
