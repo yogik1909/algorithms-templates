@@ -1,11 +1,38 @@
+//https://contest.yandex.ru/contest/22781/run-report/111621033/
+/*
+-- ПРИНЦИП РАБОТЫ --
+Реализая двустронней очереди на замкнутом буфере.
+Алгортм работае исходя из 2 указателей на текущую позищию последнего вставленного эемента в буфер.
+Помещать из извлекать эелменты можно как в начало очереди так и в конец очереди, так как используется замкнутый буфер,
+размерность очереди имеет ограничении, задаваемое при инифиализации очереди.
+
+
+-- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
+Так как для в данном алгоритме я буду испольовать 2 указателя на противоположные вершины буфера
+я смогу ивлекать и помещать элементы в обоих направлениях. Особый случай это полностью пустой буфер и буфер с одним
+значением, в этом состоянии указателя индексируют один и тот же элемент буфера, для решения этой коллизии введены
+описывающие состояние пустого буфера.
+
+-- ВРЕМЕННАЯ СЛОЖНОСТЬ --
+
+Мне соложно оченить временную сложность так как в полученом ологритме
+Кажется, что алогортм должен работаь по линейной ассимптоте зависящей от количества операций, так как время доступа
+к элементам буффера константно поэтому предположительно O(n).
+Но если вызть во внимание тесты то я получил результаты след характреа если количество операйи x занимает время t (x = t),
+ то у меня получилось x^5 = 2,5t, это больше похоже на О(log n)
+
+ -- Пространственная сложность --
+ Что касательно пространственной сложности алгоритмая, она зависит линейно от входных параметров, так как мы используем
+ замкнутый буфер(массив) .
+
+ */
+
 package sprint2_final.A;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 class MyQueueSized {
     private Integer[] queue;
@@ -107,22 +134,19 @@ class MyQueueSized {
 
 public class A {
     public static void main(String[] args) throws IOException {
-
-        Pattern p = Pattern.compile("([a-z_]+)\\s*(-*\\d*)");
-        Matcher m;
+        StringTokenizer st;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int n = Integer.parseInt(reader.readLine());
             MyQueueSized query = new MyQueueSized(Integer.parseInt(reader.readLine()));
             for (int i = 0; i < n; i++) {
-                m = p.matcher(reader.readLine());
-                m.find();
-                switch (m.group(1)) {
+                st = new StringTokenizer(reader.readLine());
+                switch (st.nextToken()) {
                     case "push_back": {
-                        query.push_back(Integer.valueOf(m.group(2)));
+                        query.push_back(Integer.parseInt(st.nextToken()));
                         break;
                     }
                     case "push_front": {
-                        query.push_front(Integer.parseInt(m.group(2)));
+                        query.push_front(Integer.parseInt(st.nextToken()));
                         break;
                     }
                     case "pop_back": {
