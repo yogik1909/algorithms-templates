@@ -26,7 +26,12 @@ public class sort_from_key {
 
     public static void main(String[] args) {
         int[] cards = {3, 7, 9, 2, 3, 0};
-        Comparator<Integer> comparator = (card1, card2) -> Integer.compare(card1, card2);
+        Comparator<Integer> comparator = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return is_first_card_weaker(o1, o2)?-1:0;
+            }
+        };
         insertion_sort_by_comparator(cards, comparator);
         System.out.println(Arrays.toString(cards));
     }
