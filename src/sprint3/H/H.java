@@ -17,7 +17,7 @@ public class H {
             n = Integer.parseInt(reader.readLine());
             argz = reader.readLine().split(" ");
             LinkedList<String> list = new LinkedList<>(Arrays.asList(argz));
-            //Collections.sort(list);
+            Collections.sort(list);
 
 
             AllCombinations(list, "", res);
