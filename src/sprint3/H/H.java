@@ -13,7 +13,7 @@ public class H {
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
             n = Integer.parseInt(reader.readLine());
             argz = reader.readLine().split(" ");
-            Arrays.sort(argz, (l, r) -> (r + l).compareTo(l + r));
+            Arrays.sort(argz, (l, r) -> Integer.parseInt(r+l) - Integer.parseInt(l+r));
             StringBuilder ans = new StringBuilder();
             for (String number : argz) {
                 ans.append(number);
