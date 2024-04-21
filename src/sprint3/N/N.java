@@ -40,63 +40,69 @@ public class N {
         int[][] right = mergeSort(Arrays.copyOfRange(array, array.length/2, array.length));
 
         // заводим массив для результата сортировки
-        int[][] result = new int[array.length][2];
+        //int[][] result = new int[array.length][2];
+        ArrayList<int[]> arr = new ArrayList<>();
+        arr.add(new int[2]);
+        int[] curClumb= arr.get(0);
         // сливаем результаты
         int l = 0, r = 0, k = 0;
         while (l < left.length && r < right.length) {
-            int lengthVecКуы = result[l][1] - result[l][0];
             int lengthVecLeft = left[l][1] - left[l][0];
-            int lengthVecRight = right[l][1] - right[l][0];
-            if (left[l][0] == right[l][0] || left[l][1] == right[l][1]) {
-                result[k] = lengthVecLeft >= lengthVecRight?left[l]:right[r];
+            int lengthVecRight = right[r][1] - right[r][0];
+            int[]curDo = new int[2];
+            if (left[l][0] == right[r][0]){
+                if (lengthVecLeft <= lengthVecRight){
+                    curDo[0] = left[l][0];
+                    curDo[1] = left[l][1];
+                    l++;
+                }else {
+                    curDo[0] = right[r][0];
+                    curDo[1] = right[r][1];
+                    r++;
+                }
+            } else if (left[l][0] < right[r][0]) {
+                curDo[0] = left[l][0];
+                curDo[1] = left[l][1];
                 l++;
-                r++;
-            } else if (left[l][1] == right[r][0]) {
-                result[k][0] = left[l][0];
-                result[k][1] = right[r][1];
-                l++;
-                r++;
-            } else if (right[r][1] == left[l][0]) {
-                result[k][0] = right[r][0];
-                result[k][1] = left[l][1];
-                l++;
-                r++;
-            } else if(left[l][0] < right[r][0]){
-                result[k] = left[l];
-
-                if (left[l][1] > right[r][0]) {
-                    result[k][1] = Math.max(left[l][1], right[r][1]);
-                    r++;}
-                l++;
-
-            } else if (right[r][0] < left[l][0]){
-                result[k] = right[r];
-
-                if (right[r][1] > left[l][0]){
-                result[k][1] = Math.max(left[l][1], right[r][1]);
-                l++;}
+            }else {
+                curDo[0] = right[r][0];
+                curDo[1] = right[r][1];
                 r++;
             }
-            
-            k++;
-        }
-        
-        while (l < left.length) {
-            int lengthVecLeft = left[l][1] - left[l][0];
-            int lengthVecRes = result[l][1] - result[l][0];
-            if ((left[l][0] == result[l][0] || left[l][1] == result[l][1]) 
-                    && lengthVecLeft == lengthVecRes ) {
-                l++;
-                continue;} else if () {
-                
+
+            if (curClumb[0] == 0 && curClumb[1] == 0){
+                curClumb[0] = curDo[0];
+                curClumb[1] = curDo[1];
+            }else if(curClumb[0] <= curDo[0] && curDo[1] <= curClumb[0] ){
+                curClumb[1] = Math.max(curClumb[1], curDo[1]);
+            }else {
+                curClumb= new int[]{curDo[0], curDo[1]};
+                arr.add(curClumb);
+
             }
         }
-        while (r < right.length) {
-            result[k] = right[r];  // перенеси оставшиеся элементы right в result
+        while(l < left.length){
+            if(curClumb[0] <= left[l][0] && left[l][0] <= curClumb[1] ){
+                curClumb[1] = Math.max(curClumb[1], left[l][1]);
+            }else {
+                curClumb= new int[]{left[l][0], left[l][1]};
+                arr.add(curClumb);
+
+            }
+            l++;
+        }
+        while (r < right.length){
+            if(curClumb[0] <= right[r][0] && right[r][0] <= curClumb[1]  ){
+                curClumb[1] = Math.max(curClumb[1], right[r][1]);
+            }else {
+                curClumb= new int[]{right[r][0], right[r][1]};
+                arr.add(curClumb);
+
+            }
             r++;
-            k++;
         }
-        return result;
+
+        return arr.toArray(new int[arr.size()][2]);
     }
 }
 
