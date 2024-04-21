@@ -21,11 +21,11 @@ public class N {
         }
         
         int[][] res= mergeSort(arria);
+        StringBuilder sb = new StringBuilder("");
         for (int[] a:res){
-            if (a[1] == 0) continue;
-            System.out.printf("%d %d", a[0], a[1]);
-            System.out.println();
+            sb.append(a[0]).append(" ").append(a[1]).append("\n");
         }
+        System.out.println(sb);
     }
     
     public static int[][] mergeSort(int[][] array) {
@@ -40,18 +40,15 @@ public class N {
         int[][] right = mergeSort(Arrays.copyOfRange(array, array.length/2, array.length));
 
         // заводим массив для результата сортировки
-        //int[][] result = new int[array.length][2];
         ArrayList<int[]> arr = new ArrayList<>();
         arr.add(new int[2]);
         int[] curClumb= arr.get(0);
         // сливаем результаты
         int l = 0, r = 0, k = 0;
         while (l < left.length && r < right.length) {
-            int lengthVecLeft = left[l][1] - left[l][0];
-            int lengthVecRight = right[r][1] - right[r][0];
             int[]curDo = new int[2];
             if (left[l][0] == right[r][0]){
-                if (lengthVecLeft <= lengthVecRight){
+                if (left[l][1] - left[l][0] <= right[r][1] - right[r][0]){
                     curDo[0] = left[l][0];
                     curDo[1] = left[l][1];
                     l++;
