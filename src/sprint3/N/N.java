@@ -73,7 +73,7 @@ public class N {
             if (curClumb[0] == 0 && curClumb[1] == 0){
                 curClumb[0] = curDo[0];
                 curClumb[1] = curDo[1];
-            }else if(curClumb[0] <= curDo[0] && curDo[1] <= curClumb[0] ){
+            }else if(curClumb[0] <= curDo[0] && curDo[0] <= curClumb[1] ){
                 curClumb[1] = Math.max(curClumb[1], curDo[1]);
             }else {
                 curClumb= new int[]{curDo[0], curDo[1]};
