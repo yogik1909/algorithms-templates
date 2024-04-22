@@ -2,23 +2,42 @@ import java.util.Arrays;
 
 public class Solution {
 	public static int[] merge(int[] arr, int left, int mid, int right) {
+		int cur_left = left;
+		int cur_right = mid;
+		int to = 0;
 
-		if (arr.length == 1) {return arr;}
+		int[] temp_arr = new int[arr.length];
 
-
-
-
-		return null;
+		while (cur_left < mid && cur_right < right){
+			if (arr[cur_left] <= arr[cur_right]){
+				temp_arr[to] = arr[cur_left];
+				cur_left++;
+			}else {
+				temp_arr[to] = arr[cur_right];
+				cur_right++;
+			}
+			to++;
+		}
+		while (cur_left < mid){
+			temp_arr[to] = arr[cur_left];
+			cur_left++;
+			to++;
+		}
+		while (cur_right < right){
+			temp_arr[to] = arr[cur_right];
+			cur_right++;
+			to++;
+		}
+		System.arraycopy(temp_arr, 0, arr, left, right - left);
+		return arr;
 	}
 
 	public static void merge_sort(int[] arr, int left, int right) {
-		int curRigth = right -1;
-		if (curRigth - left == 1) return;
-		merge_sort(arr, left + 1, curRigth);
-		if (arr[left] > arr[curRigth]) {
-			arr[curRigth] = arr[left] + arr[curRigth];
-			arr[left] = arr[curRigth] - arr[left];
-			arr[curRigth] = arr[curRigth] - arr[left];
+		if (right - left > 2){
+			int mid = (right - left)>>1;
+			merge_sort(arr, left, mid);
+			merge_sort(arr, mid , right);
+			merge(arr, left, mid , right);
 		}
 
 	}
