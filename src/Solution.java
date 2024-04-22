@@ -2,14 +2,19 @@ import java.util.Arrays;
 
 public class Solution {
 	public static int[] merge(int[] arr, int left, int mid, int right) {
-		// Your code
-		// “ヽ(´▽｀)ノ”	
+
+		if (arr.length == 1) {return arr;}
+
+
+
+
 		return null;
 	}
 
 	public static void merge_sort(int[] arr, int left, int right) {
-		// Your code
-		// “ヽ(´▽｀)ノ”
+
+		if ()
+
 	}
 
 	public static void main(String[] args) {
