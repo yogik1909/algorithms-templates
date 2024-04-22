@@ -1,4 +1,5 @@
 // <template>
+package sprint2.B;
 class Node<V> {  
     public V value;  
     public Node<V> next;  
@@ -11,9 +12,18 @@ class Node<V> {
 // <template>
 
 public class Solution {
-    public static Node<String> solution(Node<String> head, int idx) {
+    public static void solution(Node<String> head) {
         // Your code
         // ヽ(´▽`)/
+        Node<String> curNode = head;
+        while (curNode != null){
+            System.out.println(curNode.value);
+            curNode = curNode.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        test();
     }
 
     private static void test() {
@@ -21,11 +31,13 @@ public class Solution {
         Node<String> node2 = new Node<>("node2", node3);
         Node<String> node1 = new Node<>("node1", node2);
         Node<String> node0 = new Node<>("node0", node1);
-        Node<String> newHead = solution(node0, 1);
-        assert newHead == node0;
-        assert newHead.next == node2;
-        assert newHead.next.next == node3;
-        assert newHead.next.next.next == null;
-        // result is : node0 -> node2 -> node3
+        solution(node0);
+        /*
+        Output is:
+        node0
+        node1
+        node2
+        node3
+        */
     }
 }
