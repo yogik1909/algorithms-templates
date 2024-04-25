@@ -8,23 +8,19 @@ public class B {
 
     public static class QuickSort {
 
-        public  void sort(int[] array) {
-            quickSort(array, 0, array.length - 1);
-        }
-
-        private  void quickSort(int[] array, int low, int high) {
-            if (low < high) {
-                int pivotIndex = partition(array, low, high);
-                quickSort(array, low, pivotIndex - 1);
-                quickSort(array, pivotIndex + 1, high);
+        public static void quickSort(Player[] array, int left, int right) {
+            if (left < right) {
+                int pivotIndex = partition(array, left, right);
+                quickSort(array, left, pivotIndex - 1);
+                quickSort(array, pivotIndex + 1, right);
             }
         }
 
-        private int partition(int[] array, int low, int high) {
-            int pivot = array[high];
+        private static int partition(Player[] array, int low, int high) {
+            Player pivot = array[high];
             int i = (low - 1);
             for (int j = low; j < high; j++) {
-                if (array[j] < pivot) {
+                if (array[j].compareTo(pivot) < 0) {
                     i++;
                     swap(array, i, j);
                 }
@@ -33,8 +29,8 @@ public class B {
             return i + 1;
         }
 
-        private  void swap(int[] array, int i, int j) {
-            int temp = array[i];
+        private static void swap(Player[] array, int i, int j) {
+            Player temp = array[i];
             array[i] = array[j];
             array[j] = temp;
         }
@@ -51,10 +47,17 @@ public class B {
                 players[i] = new Player(player[0], Integer.parseInt(player[1]), Integer.parseInt(player[2]));
             }
         }
+        QuickSort.quickSort(players, 0, players.length - 1);
+        StringBuilder sb = new StringBuilder("");
+        for (int i = 0; i < players.length; i++) {
+            sb.append(players[i].login).append("\n");
+        }
+        System.out.println(sb);
+
 
 
     }
-    public static class Player{
+    public static class Player  implements Comparable<Player> {
         private String login;
         private int solve;
         private int penalty;
@@ -64,6 +67,17 @@ public class B {
             this.penalty = penalty;
         }
 
+        @Override
+        public int compareTo(Player o) {
+            int resCompare;
+            resCompare = o.solve - this.solve;
+             if (resCompare == 0)
+                 resCompare = this.penalty - o.penalty;
+             if (resCompare == 0)
+                 resCompare = this.login.compareTo(o.login);
+
+            return resCompare;
+        }
     }
 }
 
