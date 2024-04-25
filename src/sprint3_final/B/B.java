@@ -16,16 +16,18 @@ public class B {
             }
         }
 
-        private static int partition(Player[] array, int low, int high) {
-            Player pivot = array[high];
+        private static int partition(Player[] array, int low, int right) {
+            int middle = low + (right - low) / 2;
+            Player pivot = array[middle];
+            swap(array, middle, right);
             int i = (low - 1);
-            for (int j = low; j < high; j++) {
+            for (int j = low; j < right; j++) {
                 if (array[j].compareTo(pivot) < 0) {
                     i++;
                     swap(array, i, j);
                 }
             }
-            swap(array, i + 1, high);
+            swap(array, i + 1, right);
             return i + 1;
         }
 
