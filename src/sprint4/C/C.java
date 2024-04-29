@@ -15,6 +15,11 @@ public class C {
             s = reader.readLine();
             t = reader.readLine();
         }
+
+        if (s.length() != t.length()) {
+            System.out.println(neg);
+            return;
+        }
         int i = 0;
         for (; i < s.length() && i < t.length(); i++) {
             char charS = s.charAt(i);
