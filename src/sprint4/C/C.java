@@ -29,7 +29,7 @@ public class C {
                     System.out.println(neg);
                     return;
                 }
-                mapT_S.put(charS, charT);
+                mapS_T.put(charS, charT);
                 mapT_S.put(charT, charS);
             }
         }
