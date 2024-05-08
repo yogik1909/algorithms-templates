@@ -9,24 +9,26 @@ public class D {
     public static void main(String[] args) throws IOException {
         int a, m;
         String s;
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             a = Integer.parseInt(reader.readLine());
             m = Integer.parseInt(reader.readLine());
             s = reader.readLine();
         }
-        String has = Polynomial(s, a).mod(BigInteger.valueOf(m)).toString();
+        int indHas = Polynomial(s, a, m);
 
-        System.out.println(has);
+        System.out.println(indHas);
 
 
     }
 
-    public static BigInteger Polynomial(String hasingString, int x) {
-        BigInteger result = new BigInteger(String.valueOf((int) hasingString.charAt(0)));
-        BigInteger xb = new BigInteger(Integer.valueOf(x).toString());
-        for (int i = 1; i < hasingString.length(); i++) {
-            result = result.multiply(xb).add(BigInteger.valueOf(hasingString.charAt(i))); // Применяем алгоритм Горнера
+    public static int Polynomial(String hasingString, int x, int mod) {
+        BigInteger res = new BigInteger(String.valueOf(0));
+        BigInteger mult = new BigInteger(String.valueOf(x));
+        BigInteger modVal = new BigInteger(String.valueOf(mod));
+
+        for (int i = 0; i < hasingString.length(); i++) {
+            res = res.multiply(mult).add(BigInteger.valueOf(hasingString.charAt(i))).mod(modVal);
         }
-        return result;
+        return Integer.parseInt(res.toString());
     }
 }
