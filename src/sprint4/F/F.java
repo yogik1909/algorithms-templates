@@ -21,8 +21,6 @@ public class F {
                 System.out.println(getSubStringHash(Integer.parseInt(range[0]) - 1, Integer.parseInt(range[1]), m));
             }
         }
-
-
     }
 
     static long getSubStringHash(int start, int end, int mod){
