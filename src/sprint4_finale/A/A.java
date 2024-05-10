@@ -31,31 +31,21 @@ public class A {
 
     public List<Integer> doSearch(String query) {
         String[] queryWords = query.split("\\s+");
-        Map<Integer, Integer[]> relevance = new HashMap<>();
+        Map<Integer, Integer> relevance = new HashMap<>();
 
         for (String word : queryWords) {
             if (index.containsKey(word)) {
                 for (Map.Entry<Integer, Integer> entry : index.get(word).entrySet()) {
                     int docId = entry.getKey();
                     int count = entry.getValue();
-                    if (relevance.containsKey(docId)){
-                        Integer[] curValrelev = relevance.get(docId);
-                        curValrelev[0] += 1;
-                        curValrelev[1] += count;
-                    }else {
-                        relevance.put(docId, new Integer[]{1,count});
-                    }
-
+                    relevance.put(docId, relevance.getOrDefault(docId, 0) + count);
                 }
             }
         }
 
-        List<Map.Entry<Integer, Integer[]>> sortedEntries = new ArrayList<>(relevance.entrySet());
+        List<Map.Entry<Integer, Integer>> sortedEntries = new ArrayList<>(relevance.entrySet());
         sortedEntries.sort((a, b) -> {
-            int cmp = Integer.compare(b.getValue()[0], a.getValue()[0]);
-            if (cmp == 0){
-                cmp = Integer.compare(b.getValue()[1], a.getValue()[1]);
-            }
+            int cmp = Integer.compare(b.getValue(), a.getValue());
             if (cmp == 0) {
                 return Integer.compare(a.getKey(), b.getKey());
             }
@@ -64,7 +54,7 @@ public class A {
 
         List<Integer> results = new ArrayList<>();
         for (int i = 0; i < Math.min(5, sortedEntries.size()); i++) {
-            if (sortedEntries.get(i).getValue()[0] > 0) {
+            if (sortedEntries.get(i).getValue() > 0) {
                 results.add(sortedEntries.get(i).getKey());
             }
         }
