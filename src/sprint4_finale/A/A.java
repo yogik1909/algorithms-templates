@@ -3,10 +3,7 @@ package sprint4_finale.A;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class A {
     private Map<String, Map<Integer, Integer>> index = new HashMap<>();
@@ -30,10 +27,13 @@ public class A {
     }
 
     public List<Integer> doSearch(String query) {
-        String[] queryWords = query.split("\\s+");
         Map<Integer, Integer> relevance = new HashMap<>();
 
+        String[] queryWords;
+        queryWords = new HashSet<>(Arrays.asList(query.split("\\s+"))).toArray(new String[0]);
+
         for (String word : queryWords) {
+            if (relevance.containsKey(word)) continue;
             if (index.containsKey(word)) {
                 for (Map.Entry<Integer, Integer> entry : index.get(word).entrySet()) {
                     int docId = entry.getKey();
