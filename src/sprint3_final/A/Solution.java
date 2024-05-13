@@ -1,6 +1,6 @@
 // Задача A. Поиск в сломанном массиве
 // https://contest.yandex.ru/contest/23815/problems/A/
-// Посылка: https://contest.yandex.ru/contest/23815/run-report/112849449/
+// Посылка: https://contest.yandex.ru/contest/23815/run-report/113759502/
 
 /*
 Реализация поиска в сломанном массиве следующая
@@ -30,7 +30,7 @@
 
 -- Пространственная сложность --
 В этом алготме не используется дублирвоание полуинтервалов, операции производятся только над
-индексами границ массива поэтому пространственная лсожното оссимптоматичная О(n)
+индексами границ массива поэтому пространственная лсожното оссимптоматичная О(1)
  */
 
 package sprint3_final.A;
@@ -38,47 +38,38 @@ package sprint3_final.A;
 public class Solution {
     public static int brokenSearch(int[] arr, int k) {
 
-        switch (arr.length) {
-            case 0: {return -1;}
-            case 1: {return k == arr[0]?0:-1;}
-            case 2: {return k==arr[0]?0:k == arr[1]?1:-1;}
-        }
-
-
         int startInd;
 
-        int mid = arr.length >> 1;
-        if (arr[0] < arr[mid] && arr[mid] < arr[arr.length - 1]){
-            return binarySearch(arr, k, 0, arr.length);
-        }  else {
-            startInd = binarySearchMin(arr, 0, arr.length);
-        }
+        startInd = binarySearchMin(arr, 0, arr.length - 1);
 
         int ResIndex = binarySearch(arr, k, 0, startInd);
-        if (ResIndex == -1 ) {ResIndex = binarySearch(arr, k, startInd, arr.length);}
+        if (ResIndex == -1) {
+            ResIndex = binarySearch(arr, k, startInd, arr.length);
+        }
 
         return ResIndex;
 
     }
 
     public static int binarySearchMin(int[] arr, int left, int right) {
-        if (right - left > 2) {
+        if (right - left + 1 > 2) {
             int mid = (left + right) >> 1;
             if (arr[mid - 1] > arr[mid] && arr[mid] < arr[mid + 1]) return mid;
             if (arr[left] > arr[mid]) {
                 return binarySearchMin(arr, left, mid);
             }
             return binarySearchMin(arr, mid, right);
-        } else if (right - left == 2) {
-            return arr[right-1] > arr[left] ? left : right;
+        } else if (right - left + 1 == 2) {
+            return arr[right] > arr[left] ? left : right;
         }
-        return -1;
+        return 0;
     }
+
     public static int binarySearch(int[] arr, int val, int left, int right) {
         if (right <= left) { // промежуток пуст
             return -1;
         }
-        int mid = (left + right) / 2;
+        int mid = (left + right) >> 1;
         if (arr[mid] == val) {
             return mid;
         } else if (val < arr[mid]) {
@@ -89,18 +80,19 @@ public class Solution {
     }
 
     private static void test() {
-        int[] arr = {19,    21,  100,    101,    1,  4,  5,  7,  12};
-        System.out.println(binarySearchMin(arr, 0, arr.length));
+        int[] arr = {5};
+        //{19,    21,  100,    101,    1,  4,  5,  7,  12};
+//        System.out.println(binarySearchMin(arr, 0, arr.length));
 
-        System.out.println("Seach: 4 = "+brokenSearch(arr, 4));
-        System.out.println("Seach: 100 = "+brokenSearch(arr, 100));
-        arr = new int[]{101,   1,   4,      5,      7,  12, 19, 21, 100};
-        System.out.println(binarySearchMin(arr, 0, arr.length));
-        arr = new int[]{100, 101, 1, 4, 5, 7, 12, 19, 21};
-        System.out.println(binarySearchMin(arr, 0, arr.length));
-        assert 6 == brokenSearch(arr, 5);
-        arr = new int[] {5, 1};
-        System.out.println(brokenSearch(arr, 1));
+//        System.out.println("Seach: 4 = "+brokenSearch(arr, 4));
+//        System.out.println("Seach: 100 = "+brokenSearch(arr, 100));
+//        arr = new int[]{101,   1,   4,      5,      7,  12, 19, 21, 100};
+//        System.out.println(binarySearchMin(arr, 0, arr.length));
+//        arr = new int[]{100, 101, 1, 4, 5, 7, 12, 19, 21};
+//        System.out.println(binarySearchMin(arr, 0, arr.length));
+        System.out.println(brokenSearch(arr, 5));
+//        arr = new int[] {5, 1};
+//        System.out.println(brokenSearch(arr, 1));
 
     }
 
