@@ -55,6 +55,7 @@ public class B {
             Random random = new Random();
             return random.nextInt((rigth - left) + 1) + left;
         }
+
         public static void quickSort(Player[] array, int left, int right) {
             if (left < right) {
                 int pivotIndex = partition(array, left, right);
@@ -88,7 +89,7 @@ public class B {
     public static void main(String[] args) throws IOException {
         int n;
         Player[] players;
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             n = Integer.parseInt(reader.readLine());
             players = new Player[n];
             for (int i = 0; i < n; i++) {
@@ -104,12 +105,13 @@ public class B {
         System.out.println(sb);
 
 
-
     }
-    public static class Player  implements Comparable<Player> {
+
+    public static class Player implements Comparable<Player> {
         private String login;
         private int solve;
         private int penalty;
+
         public Player(String login, int solve, int penalty) {
             this.login = login;
             this.solve = solve;
@@ -120,10 +122,12 @@ public class B {
         public int compareTo(Player o) {
             int resCompare;
             resCompare = Integer.compare(o.solve, this.solve);
-             if (resCompare == 0)
-                 resCompare = Integer.compare(this.penalty, o.penalty);
-             if (resCompare == 0)
-                 resCompare = this.login.compareTo(o.login);
+            if (resCompare == 0) {
+                resCompare = Integer.compare(this.penalty, o.penalty);
+            }
+            if (resCompare == 0) {
+                resCompare = this.login.compareTo(o.login);
+            }
 
             return resCompare;
         }
