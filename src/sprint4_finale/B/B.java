@@ -13,14 +13,18 @@
 Метод delete: удаляет ключ из таблицы и возвращает значение. Если ключ не найден, возвращает null.
 
 Эта реализация обеспечивает базовые операции хеш-таблицы с использованием метода цепочек для разрешения коллизий.
-Вычислительная сложность.
+## Вычислительная сложность.
 В худшем случае мы получим вычислительную сложность O(n) для методов put, get, delete, если ключи будут стоять
-только из одинаковых по модулю чисел.
+только из одинаковых по модулю чисел. В среднем случай вычислительная сложность составляет О(1)
 Для примера: всего в коллекции 2 элемента и значения ключей принадлежат множеству {2, -2}.
 В среднем для каждой операции вычислительная сложность O(1).
+Так как реализация не подразумевает мастабирования карзины дня хранения значений мы не получим ухудшение времени при
+переволнении или чрезмерном высвобождении карзины.
 
-
-
+## Пространственная сложность
+пространсвенную сложность собственой реализации Map можно оценить как О(n+m) где
+ - n - количество вводимых пар значений
+ - m - размер базового массива
  */
 
 
@@ -33,7 +37,7 @@ import java.io.InputStreamReader;
 public class B {
 
     public static void main(String[] args) throws IOException {
-        MyHashTable ht = new MyHashTable((int) Math.pow(10, 3));
+        MyHashTable ht = new MyHashTable();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int n = Integer.parseInt(reader.readLine());
             StringBuilder sb = new StringBuilder("");
@@ -78,17 +82,19 @@ class MyHashTable {
     private Entry[] table;
     private int capacity;
 
-    public MyHashTable(int capacity) {
-        this.capacity = capacity;
+    public MyHashTable() {
+        this.capacity = (int) Math.pow(10, 3);
         this.table = new Entry[capacity];
     }
 
-    private int hash(int key) {
-        return Math.abs(key) % capacity;
+    private int getBucketIndex(int key) {
+        return  hash(key) % capacity;
     }
-
+    private int hash(int key){
+        return Math.abs(key);
+    }
     public void put(int key, int value) {
-        int index = hash(key);
+        int index = getBucketIndex(key);
         Entry newEntry = new Entry(key, value);
         if (table[index] == null) {
             table[index] = newEntry;
@@ -108,7 +114,7 @@ class MyHashTable {
     }
 
     public Integer get(int key) {
-        int index = hash(key);
+        int index = getBucketIndex(key);
         Entry current = table[index];
         while (current != null) {
             if (current.key == key) {
@@ -120,7 +126,7 @@ class MyHashTable {
     }
 
     public Integer delete(int key) {
-        int index = hash(key);
+        int index = getBucketIndex(key);
         Entry current = table[index];
         Entry prev = null;
         while (current != null) {
