@@ -1,6 +1,6 @@
 // Задача B. Хеш-таблица
 // https://contest.yandex.ru/contest/24414/problems/B/
-// Посылка: https://contest.yandex.ru/contest/24414/run-report/113796466/
+// Посылка: https://contest.yandex.ru/contest/24414/run-report/114094502/
 
 /*
 
