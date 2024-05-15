@@ -1,6 +1,6 @@
 // Задача A. Поисковая система
 // hhttps://contest.yandex.ru/contest/24414/problems/A/
-// Посылка: https://contest.yandex.ru/contest/24414/run-report/113784370/
+// Посылка: https://contest.yandex.ru/contest/24414/run-report/114074860/
 
 /*
 **Поисковый механизм**
