@@ -1,9 +1,7 @@
 // B. Эффективная быстрая сортировка
 // https://contest.yandex.ru/contest/23815/problems/B/
-// Посылка 1: Сортировка с выбором опортны элементом последний элемент последовательности
-// https://contest.yandex.ru/contest/23815/run-report/112849449/
-// Посылка 2: Сотрировка с выбором опорынм элементом средний элемент последовательности
-// https://contest.yandex.ru/contest/23815/run-report/112965223/
+// Посылка 1: Сортировка с выбором опортны элементом - произвольный элемент последовательности
+// https://contest.yandex.ru/contest/23815/run-report/113958838/
 
 /*
 Мой алгоритм основан, как я понял, на классическом алгоритме быстрой сортировки in-place quick sortтолько переписанный
@@ -26,9 +24,21 @@
 -- Вычислительная сложность --
 Так как из теритических занятий мы знаем что алгорит быстрой сортировки имеет
 теритическую сложность O(n log n), которую сложно доказать или опровегнуть. Спорить с этим не будем.
+Но в худшем варианте при вычислительная сложность алгоритма быстрой сортировки O(n^2), в случае если массив будет
+изначально отсортирован и мы будем брать разделителем крайние элементы
 -- Пространственная сложность --
 Так как для сортировки  in-place не используется создание дополниельных структур
-Пространственная сложность осимптотична О(n)
+Используются только переменные которые хранят промежуточные данные для обмена элементо.
+Пространственная сложность осимптотична О(1)
+
+Филипп, не нашел тебя в пачке. Поэтому пишу тут.
+Понимаю, что выбор стратегии подбора опорным произвольного элементы последовательности, делается ради статистической выгоды.
+Но так ли это будет в бою.
+Тесты алгорптма с выбором произольного элемента показили худший результат относительно выбора последнего.
+Я явно усложинили аглоритм на операцию свапа выбранного элемента на метсо правого, для проведения попарного сравнения.
+Хоть эта операция и имеет константную сложность, но она выполнятеся в каждой итерации.
+Если речь идет о неотсортированном массиве и мы не знаем диапазон сортируемых величин, взятие опорным элемента в конце
+есть частрый случай взятия произвольного.
  */
 
 package sprint3_final.B;
@@ -36,11 +46,15 @@ package sprint3_final.B;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 public class B {
 
     public static class QuickSort {
-
+        public static int getRandomIndexPivotFromRange(int left, int rigth) {
+            Random random = new Random();
+            return random.nextInt((rigth - left) + 1) + left;
+        }
         public static void quickSort(Player[] array, int left, int right) {
             if (left < right) {
                 int pivotIndex = partition(array, left, right);
@@ -50,7 +64,9 @@ public class B {
         }
 
         private static int partition(Player[] array, int left, int right) {
-            Player pivot = array[right];
+            int randIndexPivot = getRandomIndexPivotFromRange(left, right);
+            Player pivot = array[randIndexPivot];
+            swap(array, randIndexPivot, right);
             int i = (left - 1);
             for (int j = left; j < right; j++) {
                 if (array[j].compareTo(pivot) < 0) {
@@ -103,9 +119,9 @@ public class B {
         @Override
         public int compareTo(Player o) {
             int resCompare;
-            resCompare = o.solve - this.solve;
+            resCompare = Integer.compare(o.solve, this.solve);
              if (resCompare == 0)
-                 resCompare = this.penalty - o.penalty;
+                 resCompare = Integer.compare(this.penalty, o.penalty);
              if (resCompare == 0)
                  resCompare = this.login.compareTo(o.login);
 
