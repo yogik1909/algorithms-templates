@@ -1,5 +1,7 @@
 package sprint5.A;
 
+import java.util.Arrays;
+
 public class Solution {
     public static int treeSolution(Node head) {
         int[] values = new int[3];
@@ -9,8 +11,7 @@ public class Solution {
 
 
 
-        return values[0]>values[1]?
-                values[0]>values[2]?values[0]:values[2]:values[1]>values[2]?values[1]:values[2];
+        return Arrays.stream(values).max().getAsInt();
     }
 
     // <template>
