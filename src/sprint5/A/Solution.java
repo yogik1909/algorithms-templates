@@ -1,7 +1,16 @@
+package sprint5.A;
+
 public class Solution {
     public static int treeSolution(Node head) {
-        // Your code
-        // “ヽ(´▽｀)ノ”
+        int[] values = new int[3];
+        values[0] = head.value;
+        values[1] = head.left!=null?treeSolution(head.left): -1;
+        values[2] = head.right!=null?treeSolution(head.right): -1;
+
+
+
+        return values[0]>values[1]?
+                values[0]>values[2]?values[0]:values[2]:values[1]>values[2]?values[1]:values[2];
     }
 
     // <template>
