@@ -1,7 +1,41 @@
+package sprint5.E;
+
+import java.util.Stack;
+
 public class Solution {
+    public static void main(String[] args) {
+        Node node1 = new Node(1, null, null);
+        Node node2 = new Node(4, null, null);
+        Node node3 = new Node(3, node1, node2);
+        Node node4 = new Node(8, null, null);
+        Node node5 = new Node(5, node3, node4);
+        System.out.println(treeSolution(node5));
+        node2.right = new Node(8, null, null);
+        System.out.println(treeSolution(node5));
+    }
+
     public static boolean treeSolution(Node head) {
-        // Your code
-        // “ヽ(´▽｀)ノ”
+        Stack<Node> stack = new Stack<>();
+        Node node = head;
+        Node prev = null;
+
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+
+            if (prev != null && node.value <= prev.value) {
+                return false;
+            }
+
+            prev = node;
+            node = node.right;
+        }
+
+        return true;
     }
 
     // <template>
@@ -25,7 +59,7 @@ public class Solution {
     // <template>
     
     
-    private static void test() {
+     public static void test() {
         Node node1 = new Node(1, null, null);
         Node node2 = new Node(4, null, null);
         Node node3 = new Node(3, node1, node2);
