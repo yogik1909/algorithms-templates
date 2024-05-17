@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class I {
+    private static Map<String, List<Node>> cache = new HashMap<>();
     public static void main(String[] args) throws IOException {
         int n;
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
@@ -25,6 +28,10 @@ public class I {
     }
 
     private static List<Node> generateTrees(int start, int end) {
+        String key = start + "," + end;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
         List<Node> allTrees = new ArrayList<>();
         if (start > end) {
             allTrees.add(null);
@@ -44,6 +51,7 @@ public class I {
                 }
             }
         }
+        cache.put(key, allTrees);
         return allTrees;
     } 
     private static class Node {
