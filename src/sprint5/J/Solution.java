@@ -1,7 +1,19 @@
+package sprint5.J;
+
 public class Solution {
     public static Node insert(Node root, int key) {
-        // Your code
-        // “ヽ(´▽｀)ノ”
+        if (root == null) {
+            root = new Node(null, null, key);
+            return root;
+        }
+
+        if (key < root.getValue()) {
+            root.left = insert(root.getLeft(), key);
+        } else if (key >= root.getValue()) {
+            root.right = insert(root.getRight(), key);
+        }
+
+        return root;
     }
 
     // <template>
