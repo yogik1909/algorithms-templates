@@ -8,9 +8,9 @@ public class Solution {
         }
 
         if (key < root.getValue()) {
-            root.left = insert(root.getLeft(), key);
+            root.setLeft(insert(root.getLeft(), key));
         } else if (key >= root.getValue()) {
-            root.right = insert(root.getRight(), key);
+            root.setRight(insert(root.getRight(), key)) ;
         }
 
         return root;
@@ -18,11 +18,11 @@ public class Solution {
 
     // <template>
     private static class Node {
-        private int value;  
-        private Node left;  
-        private Node right;  
-    
-        Node(Node left, Node right, int value) {  
+        private int value;
+        private Node left;
+        private Node right;
+
+        Node(Node left, Node right, int value) {
             this.left = left;
             this.right = right;
             this.value = value;
@@ -31,29 +31,29 @@ public class Solution {
         public int getValue() {
             return value;
         }
-    
+
         public Node getRight() {
             return right;
         }
-    
+
         public void setRight(Node right) {
             this.right = right;
         }
-    
+
         public Node getLeft() {
             return left;
         }
-    
+
         public void setLeft(Node left) {
             this.left = left;
         }
-    
+
         public void setValue(int value) {
             this.value = value;
         }
     }
     // <template>
-    
+
     private static void test() {
         Node node1 = new Node(null, null, 7);
         Node node2 = new Node(node1, null, 8);
