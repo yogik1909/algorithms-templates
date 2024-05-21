@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-//        int[] sample = {12, 6, 8, 3, 15, 7};
-//        System.out.println(siftUp(sample, 5) == 1);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int[] heap = new int[Integer.parseInt(reader.readLine())];
         int i = 0;
@@ -19,8 +17,8 @@ public class Solution {
         for (i = 0; i < iter; i++) {
             String[] com = reader.readLine().split(" ");
             int n = Integer.parseInt(com[0]);
-            int aper = Integer.parseInt(com[1]);
-            heap[n - 1] += aper;
+            int oper = Integer.parseInt(com[1]);
+            heap[n - 1] += oper;
             System.out.println(siftUp(heap, n));
         }
         for (int num:heap){
