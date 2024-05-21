@@ -1,24 +1,46 @@
 package sprint5.M;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Solution {
-    public static void main(String[] args) {
-        int[] sample = {12, 6, 8, 3, 15, 7};
-        System.out.println(siftUp(sample, 5) == 1);
+    public static void main(String[] args) throws IOException {
+//        int[] sample = {12, 6, 8, 3, 15, 7};
+//        System.out.println(siftUp(sample, 5) == 1);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int[] heap = new int[Integer.parseInt(reader.readLine())];
+        int i = 0;
+        for (String num:reader.readLine().split(" ")){
+            heap[i] = Integer.parseInt(num);
+            i++;
+        }
+        int iter = Integer.parseInt(reader.readLine());
+        for (i = 0; i < iter; i++) {
+            String[] com = reader.readLine().split(" ");
+            int n = Integer.parseInt(com[0]);
+            int aper = Integer.parseInt(com[1]);
+            heap[n - 1] += aper;
+            System.out.println(siftUp(heap, n));
+        }
+        for (int num:heap){
+            System.out.print(String.valueOf(num) + " ");
+        }
+
     }
     public static int siftUp(int[] heap, int idx) {
-        int curIndex = idx - 1;
         if (idx == 1) {
             return idx;
         }
 
-        int indexParent = curIndex >> 1;
-        if (heap[indexParent] < heap[curIndex]) {
-            int temp = heap[curIndex];
-            heap[indexParent] = heap[curIndex];
-            heap[curIndex] = temp;
-            return siftUp(heap, indexParent + 1);
+        int indexParent = idx / 2;
+        if (heap[indexParent - 1] < heap[(idx - 1)]) {
+            heap[indexParent - 1] += heap[idx - 1];
+            heap[idx - 1] = heap[indexParent - 1] - heap[idx - 1];
+            heap[indexParent - 1] -= heap[idx - 1];
+            return siftUp(heap, indexParent);
         }
-        return curIndex + 1;
+        return idx;
     }
 
     private static void test() {
