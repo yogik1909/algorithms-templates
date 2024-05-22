@@ -1,3 +1,5 @@
+package sprint5_final.B;
+
 // <template>
 class Node {
     private int value;
@@ -38,8 +40,22 @@ class Node {
 
 public class Solution {
     public static Node remove(Node root, int key) {
-        // Your code
-        // “ヽ(´▽｀)ノ”
+        if (root == null) {
+            return root;
+        }
+
+        // Если удаляемый ключ меньше корня рекурчивно уходим влево
+        if (key < root.getValue()){
+            root.setLeft(remove(root.getLeft(), key));
+        }
+        // Иначе переходим к правому потомку c установокй значения
+         else if ( key > root.getValue()){
+            root.setRight(remove(root.getRight(), key));
+        }
+         //Начинается обработка узла с ключе  раным улючу удаления
+        // Сначала обрабатываем первый случай узла без потомков
+
+        return root;
     }
 
     private static void test() {
