@@ -1,7 +1,17 @@
+package sprint5.A;
+
+import java.util.Arrays;
+
 public class Solution {
     public static int treeSolution(Node head) {
-        // Your code
-        // “ヽ(´▽｀)ノ”
+        int[] values = new int[3];
+        values[0] = head.value;
+        values[1] = head.left!=null?treeSolution(head.left): -1;
+        values[2] = head.right!=null?treeSolution(head.right): -1;
+
+
+
+        return Arrays.stream(values).max().getAsInt();
     }
 
     // <template>
