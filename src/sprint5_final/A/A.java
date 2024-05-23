@@ -1,3 +1,25 @@
+/*
+Задача: https://contest.yandex.ru/contest/24810/problems/
+Посылка: https://contest.yandex.ru/contest/24810/run-report/114459791/
+
+Описание
+Для решения задачи по сортировке списка игроков выбрал структуру приоритетной очереди.
+Данная структура позволит хранить участников соревнований, а также получить отсортированный результат по
+необходимым параметрам.
+Для описания участников создан класс Playear. Для описания структуры приоритетной кучи реализован класс Heap.
+## Вычислительная сложность
+Создание объекта кучи оценивается как O(1), так как мы изначально знаем количество участников соревнования.
+Добавление участника в кучу оценивается как O(log n) — общая оценка процесса вставки участника обходится
+O(n log n).
+Получение сортированного результирующего списка участников оценивается как O(n log n).
+Общая вычислительная сложность O(1) + O(n log n) + O(n log n) асимптоматична O(n log n).
+## Пространственная сложность
+Так как для получения результата отсортированного списка участников по заданным параметрам мы используем
+приоритетную очередь, дополнительно понадобится O(n) памяти для хранения.
+Также для вывода на экран используется O(n) дополнительной памяти, если выводить результат построчно,
+дополнительная память для хранения промежуточного итога не потребуется.
+ */
+
 package sprint5_final.A;
 
 
@@ -14,7 +36,7 @@ public class A {
         int n;
         Heap heap = new Heap();
 
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             n = Integer.parseInt(reader.readLine());
             for (int i = 0; i < n; i++) {
                 String[] player = reader.readLine().split(" ");
@@ -24,7 +46,7 @@ public class A {
 
         StringBuilder sb = new StringBuilder("");
         Player maxPlayer;
-        while ((maxPlayer = heap.getMax()) != null){
+        while ((maxPlayer = heap.getMax()) != null) {
             sb.append(maxPlayer.toString()).append("\n");
         }
         System.out.println(sb);
@@ -34,8 +56,8 @@ public class A {
     public static class Heap {
         private List<Player> heap;
 
-        public Heap() {
-            this.heap = new ArrayList<>();
+        public Heap(int count) {
+            this.heap = new ArrayList<>(count);
         }
 
         public void insert(Player newPlayer) {
@@ -70,6 +92,7 @@ public class A {
             }
             return max;
         }
+
         private void siftDown(int index) {
             int lastIndex = heap.size() - 1;
             while (index < lastIndex) {
@@ -102,10 +125,12 @@ public class A {
             heap.set(j, temp);
         }
     }
-    public static class Player  implements Comparable<Player> {
+
+    public static class Player implements Comparable<Player> {
         private String login;
         private int solve;
         private int penalty;
+
         public Player(String login, int solve, int penalty) {
             this.login = login;
             this.solve = solve;
