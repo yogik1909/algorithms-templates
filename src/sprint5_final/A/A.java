@@ -34,10 +34,11 @@ public class A {
 
     public static void main(String[] args) throws IOException {
         int n;
-        Heap heap = new Heap();
+        Heap heap;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             n = Integer.parseInt(reader.readLine());
+            heap = new Heap(n);
             for (int i = 0; i < n; i++) {
                 String[] player = reader.readLine().split(" ");
                 heap.insert(new Player(player[0], Integer.parseInt(player[1]), Integer.parseInt(player[2])));
