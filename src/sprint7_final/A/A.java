@@ -49,30 +49,32 @@ class LevenshteinDistance {
         for (int j = 0; j <= m; j++) {
             dp[0][j] = j;
         }
-
+        int curLine = 1;
         // Заполнение матрицы стймостей
         for (int i = 1; i <= n; i++) {
-            int curline = i  % 2;
-            dp[curline][0] = i;
+            curLine = i % 2;
+            int prevLine = (i - 1) % 2;
+            dp[curLine][0] = i;
             for (int j = 1; j <= m; j++) {
                 if (s.charAt(i - 1) == t.charAt(j - 1)) {
                                     // Символы равны, стоимость 0
-                    dp[curline][j] = dp[(i - 1) % 2][j - 1];
+                    dp[curLine][j] = dp[prevLine][j - 1];
                 } else {
                     int min = Math.min(
                             // Операция удаления
-                            dp[(i - 1) % 2][j] + 1,
+                            dp[prevLine][j] + 1,
+
                             // Операция удаления
-                            dp[curline][j - 1] + 1);
-                    dp[curline][j] = Math.min(
+                            dp[curLine][j - 1] + 1);
+                    dp[curLine][j] = Math.min(
                             min,
                             // Операция замены
-                            dp[(i - 1) % 2][j - 1] + 1);
+                            dp[prevLine][j - 1] + 1);
                 }
             }
         }
 
-        return dp[1][m];
+        return dp[curLine][m];
     }
 }
 public class A {
