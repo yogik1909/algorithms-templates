@@ -43,33 +43,36 @@ class LevenshteinDistance {
         int n = s.length();
         int m = t.length();
         //Определяем массив динамики
-        int[][] dp = new int[n + 1][m + 1];
+        int[][] dp = new int[2][m + 1];
 
-        // Инициализация первой строки и первого столбца
-        for (int i = 0; i <= n; i++) {
-            dp[i][0] = i;
-        }
+        // Инициализация первой строки
         for (int j = 0; j <= m; j++) {
             dp[0][j] = j;
         }
 
         // Заполнение матрицы стймостей
         for (int i = 1; i <= n; i++) {
+            int curline = i  % 2;
+            dp[curline][0] = i;
             for (int j = 1; j <= m; j++) {
                 if (s.charAt(i - 1) == t.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1]; // Символы равны, стоимость 0
-                } else {                // Операция удаления
-                    int min = Math.min(dp[i - 1][j] + 1,
-                            // Операция добавления
-                            dp[i][j - 1] + 1);
-                    dp[i][j] = Math.min(min,
+                                    // Символы равны, стоимость 0
+                    dp[curline][j] = dp[(i - 1) % 2][j - 1];
+                } else {
+                    int min = Math.min(
+                            // Операция удаления
+                            dp[(i - 1) % 2][j] + 1,
+                            // Операция удаления
+                            dp[curline][j - 1] + 1);
+                    dp[curline][j] = Math.min(
+                            min,
                             // Операция замены
-                            dp[i - 1][j - 1] + 1);
+                            dp[(i - 1) % 2][j - 1] + 1);
                 }
             }
         }
 
-        return dp[n][m];
+        return dp[1][m];
     }
 }
 public class A {
